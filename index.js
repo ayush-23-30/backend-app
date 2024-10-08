@@ -9,16 +9,17 @@ configDotenv();
 const app = express(); 
 
 app.use(express.json()); 
-app.use(cors({
-  origin: "*", // Update this to specific domains in production
-}));
-
 
 // app.use(cors({
-//   origin: ["https://notes-app-client-omega.vercel.app/"] || "*", // Replace with your frontend domain
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   credentials: true,
+//   origin: "*", // Update this to specific domains in production
 // }));
+
+
+app.use(cors({
+  origin: ["https://notes-app-client-omega.vercel.app/"] || "*", // Replace with your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 
 
 ConnectionWithDb(); 
