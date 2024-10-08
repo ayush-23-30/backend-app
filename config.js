@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 configDotenv(); 
 const ConnectionWithDb = async ()=>{
-    await mongoose.connect(process.env.MONGO_DB)
+    await mongoose.connect(`${process.env.MONGO_DB}/${process.env.MONGO_DB_NAME}`)
     .then(()=>{
       console.log("DB is connected Successfully");
     }).catch((error)=>{
