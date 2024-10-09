@@ -12,7 +12,7 @@ app.use(express.json());
 
 // app.use(cors({
 //   origin: "*", // Update this to specific domains in production
-// }));
+// })); // this is working normally in localhost 
 
 
 app.use(cors({
