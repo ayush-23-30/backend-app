@@ -1,42 +1,44 @@
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 import { configDotenv } from "dotenv";
 import ConnectionWithDb from "./config.js";
 import router from "./router/User.router.js";
 import NoteRouter from "./router/addNotes.routes.js";
+
 configDotenv();
 
 const app = express(); 
 
 app.use(express.json()); 
 
-// app.use(cors({
-//   origin: "*", // Update this to specific domains in production
-// })); // this is working normally in localhost 
-
-
+// CORS configuration
 app.use(cors({
-  origin: ["https://notes-app-client-omega.vercel.app/"], // Replace with your frontend domain
+  origin: "https://notes-app-client-omega.vercel.app", // No trailing slash
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  credentials: true, // Allows credentials like cookies, tokens
 }));
 
+// Handle preflight requests
+app.options('*', cors());
 
+// Middleware to add CORS headers
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://notes-app-client-omega.vercel.app");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+// Database connection
 ConnectionWithDb(); 
 
-app.get("/", (req,res)=>{
-  res.json({data : "Hello backend server! "})
-}) // this is the way we make api keys to send data.. 
+app.get("/", (req, res) => {
+  res.json({ data: "Hello backend server!" });
+});
 
-// routing 
-app.use(router); 
-app.use(NoteRouter); 
+// Routing
+app.use(router);
+app.use(NoteRouter);
 
-// app.use("/api/v1/",router); 
-// app.use("/api/v1/",NoteRouter); 
-
-app.listen(process.env.PORT , ()=>{
+app.listen(process.env.PORT, () => {
   console.log("The server is running Fine");
-})
-
-// Cors - middleware package for node and express that enables Cross-Origin Resourcess Sharing. it is a secuity feature implemented in web broswer to restict how a web page can interact with different origin(domain , port).. 
+});
