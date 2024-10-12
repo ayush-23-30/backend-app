@@ -5,6 +5,15 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
+// how to create account - things needed name , email , password ( confirm password )
+// 1. the model is created req. body m se destructure karro - email , password name ko
+// 2. check they consists or not (available or not available)  
+// 3. check that is email already exists or not 
+// 4. check is password == confirm password
+// 5. now they available - password ko hash karro ; if(password - true) await bcrypt.hash(password,10)
+// 6. const user = await User.create({ email , hasspassword , name })
+
+
 const createAccount = async (req, res) => {
   try {
     const { fullName, email, password, confirmPassword } = req.body;
@@ -73,6 +82,15 @@ const createAccount = async (req, res) => {
 // if you send the token in the create Account then you don't need to do login for the user seperately
 // but i will  send the token when the user is logged in
 
+// {how to login user} - take out email , password 
+// check they exists or not 
+// now check user is exists (email) or not 
+// password checking - await bcrypt.compare(password , user.password); 
+// create a token when 
+// how ?? to create a user -- header - a specfic token ---  payload - details of user -- tail = a secret token 
+// token = jwt.sign(payload , env.Secret) 
+// now send the user 
+
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -134,6 +152,11 @@ const loginController = async (req, res) => {
     });
   }
 };
+
+// get user details  
+// destructure {id} = req.user
+// const user =  await  User.findById (id); --- it find the id 
+// now user has all the details as a object....
 
 const getUser = async (req, res) => {
   try {

@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 import { Notes } from "../models/addNotes.model.js";
-import e from "express";
 
+
+
+// add notes ( title , description ) take out by destructing 
+// check they exists or not 
+// then await and Notes.create({})
 const addNotesController = async (req, res) => {
   try {   
     const { title, content, tags } = req.body;
@@ -38,6 +42,13 @@ const addNotesController = async (req, res) => {
     });
   }
 };
+
+// how to edit a notes 
+// find the notes id noteId = params.id; 
+// then check it finds or not 
+// destructure - title , content and check them 
+// find the notes checking findById 
+// 
 
 
 const editNotes = async (req, res) => {
